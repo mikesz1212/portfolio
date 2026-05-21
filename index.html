@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>portfolio</title>
+  <link rel="stylesheet" href="css/desktop.css">
+  <link rel="stylesheet" href="css/mac-window.css">
+  <link rel="stylesheet" href="css/case-study.css">
+  <link rel="stylesheet" href="css/project-layout.css">
+</head>
+<body class="macos-dark">
+  <header class="menubar" aria-hidden="true">
+    <div class="menubar__left">
+      <span class="menubar__apple" aria-hidden="true"></span>
+      <span class="menubar__app">Finder</span>
+      <nav class="menubar__menus">
+        <span>File</span><span>Edit</span><span>View</span><span>Go</span><span>Window</span><span>Help</span>
+      </nav>
+    </div>
+    <div class="menubar__right">
+      <span class="menubar__status"></span>
+      <span class="menubar__clock" id="menubar-clock"></span>
+    </div>
+  </header>
+
+  <main class="desktop" id="desktop">
+    <nav class="desktop__icons" id="desktop-icons" aria-label="Projects"></nav>
+    <aside class="contact-card" id="contact-card" aria-label="Contact"></aside>
+  </main>
+
+  <div class="windows" id="windows" aria-live="polite"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+  <script src="js/contact.js"></script>
+  <script src="js/projects.js"></script>
+  <script src="js/project-text.js"></script>
+  <script src="js/content-loader.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/windows.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

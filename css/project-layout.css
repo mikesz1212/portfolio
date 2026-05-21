@@ -1,0 +1,157 @@
+/* Editorial scroll layout inside project windows */
+
+.project-scroll {
+  background: #e8e8e8;
+  min-height: 100%;
+  padding: 0;
+}
+
+.project-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  min-height: 280px;
+}
+
+.project-hero__text {
+  padding: clamp(20px, 3vw, 40px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: #e8e8e8;
+}
+
+.project-hero__title {
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-size: clamp(1.75rem, 4vw, 3rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1.05;
+  margin-bottom: 0.35em;
+  color: #111;
+}
+
+.project-hero__subtitle {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: clamp(0.85rem, 1.5vw, 1rem);
+  font-weight: 300;
+  font-style: italic;
+  color: #333;
+  margin-bottom: 1.25em;
+}
+
+.project-hero__body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: clamp(0.8rem, 1.2vw, 0.95rem);
+  line-height: 1.55;
+  color: #222;
+}
+
+.project-hero__body p {
+  margin-bottom: 1em;
+}
+
+.project-hero__body p:last-child {
+  margin-bottom: 0;
+}
+
+.project-hero__client {
+  margin-top: auto;
+  padding-top: 1.5em;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: clamp(0.8rem, 1.2vw, 0.95rem);
+  color: #222;
+}
+
+.project-hero__client strong {
+  font-weight: 700;
+}
+
+.project-hero__image {
+  background: #ccc;
+  min-height: 280px;
+  overflow: hidden;
+}
+
+.project-hero__image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.project-row {
+  display: grid;
+  gap: 0;
+  background: #e8e8e8;
+}
+
+.project-row--2 {
+  grid-template-columns: 1fr 1fr;
+}
+
+.project-row--3 {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.project-row--1 {
+  grid-template-columns: 1fr;
+}
+
+.project-row__cell {
+  background: #e8e8e8;
+  line-height: 0;
+}
+
+.project-row__cell img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.project-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  background: repeating-linear-gradient(
+    -45deg,
+    #ddd,
+    #ddd 8px,
+    #ececec 8px,
+    #ececec 16px
+  );
+  color: #666;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.9rem;
+  font-style: italic;
+  text-align: center;
+  padding: 24px;
+}
+
+.mac-window--project .mac-window__body {
+  padding: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 767px) {
+  .project-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .project-hero__image {
+    min-height: 220px;
+    order: -1;
+  }
+
+  .project-row--2,
+  .project-row--3 {
+    grid-template-columns: 1fr;
+  }
+
+  .project-row__cell {
+    aspect-ratio: 4 / 3;
+  }
+}

@@ -1,0 +1,7 @@
+.DS_Store
+**/.DS_Store
+
+# GitHub rejects files over 100 MB — keep videos locally, host elsewhere for the live site
+*.mp4
+*.mov
+*.webm

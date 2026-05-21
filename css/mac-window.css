@@ -1,0 +1,231 @@
+.windows {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+}
+
+.mac-window {
+  position: fixed;
+  width: calc(100vw - 48px);
+  height: calc(100vh - 48px);
+  height: calc(100dvh - 48px);
+  left: 24px;
+  top: 36px;
+  display: flex;
+  flex-direction: column;
+  pointer-events: auto;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+  font-size: 13px;
+  color: #f5f5f7;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 22px 70px rgba(0, 0, 0, 0.55),
+    0 8px 24px rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  transform: scale(0.97);
+  transition:
+    opacity 0.28s cubic-bezier(0.25, 0.8, 0.25, 1),
+    transform 0.28s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.mac-window.is-open {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.mac-window.is-closing {
+  opacity: 0;
+  transform: scale(0.97);
+  transition-duration: 0.18s;
+}
+
+.mac-window__chrome {
+  display: flex;
+  flex-direction: column;
+  background: #2a2a2c;
+  height: 100%;
+  min-height: 0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.mac-window__toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 16px 10px;
+  min-height: 44px;
+  background: rgba(50, 50, 52, 0.85);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  cursor: grab;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.mac-window__toolbar:active {
+  cursor: grabbing;
+}
+
+.mac-window__traffic {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.traffic {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  cursor: default;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+}
+
+.traffic--close {
+  background: #ff5f57;
+  cursor: pointer;
+}
+
+.traffic--min {
+  background: #febc2e;
+}
+
+.traffic--zoom {
+  background: #28c840;
+}
+
+.mac-window:hover .traffic--close,
+.mac-window.is-focused .traffic--close {
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.18);
+}
+
+.traffic--close:hover {
+  background: #ff5f57;
+  filter: brightness(1.08);
+}
+
+.traffic--close:focus-visible {
+  outline: 2px solid #0a84ff;
+  outline-offset: 2px;
+}
+
+.mac-window__title {
+  flex: 1;
+  text-align: center;
+  font-weight: 600;
+  font-size: 13px;
+  color: rgba(245, 245, 247, 0.92);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 8px;
+}
+
+.mac-window__body {
+  flex: 1;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background: #1e1e20;
+  padding: 16px;
+  min-height: 0;
+  color: #e8e8ed;
+}
+
+.mac-window__body h3 {
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #f5f5f7;
+}
+
+.mac-window__meta {
+  font-size: 12px;
+  color: #98989d;
+  margin-bottom: 12px;
+}
+
+.mac-window__body p {
+  line-height: 1.5;
+  margin-bottom: 12px;
+  color: #c7c7cc;
+}
+
+.mac-window__hero {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  border-radius: 8px;
+  background: #2c2c2e;
+}
+
+.mac-window__pdf {
+  width: 100%;
+  height: 360px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #2c2c2e;
+}
+
+.mac-window__pdf-link {
+  display: inline-block;
+  margin-top: 8px;
+  color: #0a84ff;
+  text-decoration: none;
+}
+
+.mac-window__pdf-link:hover {
+  text-decoration: underline;
+}
+
+.mac-window__audio {
+  width: 100%;
+  margin-top: 8px;
+  border-radius: 8px;
+}
+
+.mac-window__placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 120px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  color: #98989d;
+  font-style: italic;
+  text-align: center;
+  padding: 24px;
+}
+
+.case-study__loading {
+  color: #98989d;
+  font-style: italic;
+  padding: 24px;
+}
+
+@media (max-width: 767px) {
+  .mac-window {
+    width: calc(100vw - 16px) !important;
+    height: calc(100dvh - 52px) !important;
+    left: 8px !important;
+    top: 32px !important;
+    border-radius: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mac-window,
+  .mac-window.is-open,
+  .mac-window.is-closing {
+    transition: none;
+    transform: none;
+  }
+}

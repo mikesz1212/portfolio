@@ -1,0 +1,142 @@
+/* Case-study content — dark mode inside macOS window */
+
+.mac-window__body--case-study {
+  padding: 0;
+  background: #1a1a1c;
+}
+
+.case-study {
+  padding: clamp(24px, 3vw, 48px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 2vw, 24px);
+  min-height: 100%;
+}
+
+.case-study__row {
+  display: grid;
+  gap: clamp(12px, 1.5vw, 20px);
+  align-items: start;
+}
+
+.case-study__row--hero {
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+}
+
+.case-study__row--hero-text-only {
+  grid-template-columns: 1fr;
+}
+
+.case-study__text {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.case-study__title {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: #f5f5f7;
+  margin: 0;
+}
+
+.case-study__subtitle {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+  font-style: italic;
+  font-weight: 400;
+  color: #98989d;
+  margin: 0;
+}
+
+.case-study__body p {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  font-size: clamp(0.9rem, 1.4vw, 1rem);
+  line-height: 1.6;
+  color: #c7c7cc;
+  margin: 0 0 10px;
+}
+
+.case-study__body p:last-child {
+  margin-bottom: 0;
+}
+
+.case-study__client {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  font-size: clamp(0.9rem, 1.4vw, 1rem);
+  color: #aeaeb2;
+  margin: 8px 0 0;
+}
+
+.case-study__client strong {
+  font-weight: 600;
+  color: #f5f5f7;
+}
+
+.case-study__hero-img,
+.case-study__cell {
+  background: #2c2c2e;
+  border-radius: 10px;
+  overflow: hidden;
+  line-height: 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+}
+
+.case-study__hero-img img,
+.case-study__cell img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+}
+
+.case-study__hero-img.is-broken,
+.case-study__cell.is-broken {
+  background: rgba(255, 255, 255, 0.04);
+  min-height: 120px;
+}
+
+.case-study__row--gallery {
+  grid-template-columns: repeat(var(--cols, 2), 1fr);
+}
+
+.case-study__row--gallery.cols-1 { --cols: 1; }
+.case-study__row--gallery.cols-2 { --cols: 2; }
+.case-study__row--gallery.cols-3 { --cols: 3; }
+
+.case-study__row--video {
+  grid-template-columns: 1fr;
+}
+
+.case-study__video {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  background: #000;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.case-study__loading {
+  padding: 24px;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  font-size: 0.9rem;
+  color: #98989d;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .case-study__row--hero {
+    grid-template-columns: 1fr;
+  }
+
+  .case-study__row--gallery.cols-3 {
+    grid-template-columns: 1fr;
+  }
+}
