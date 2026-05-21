@@ -2,10 +2,9 @@
 const CONTACT = {
   title: "Contact",
   lines: [
-    { label: "Email", value: "hello@yourname.com", href: "mailto:hello@yourname.com" },
-    { label: "Phone", value: "+48 000 000 000", href: "tel:+48000000000" },
-    { label: "Instagram", value: "@yourhandle", href: "https://instagram.com/yourhandle" },
-    { label: "LinkedIn", value: "your-name", href: "https://linkedin.com/in/your-name" },
+    { label: "Email", value: "hania.dworak97@gmail.com", href: "mailto:hania.dworak97@gmail.com" },
+    { label: "Phone", value: "+48 609 905 473", href: "tel:+48609905473" },
+    { label: "LinkedIn", value: "Hania Dworak", href: "https://www.linkedin.com/in/hania-dworak/" },
   ],
   note: "Available for freelance & full-time roles",
 };

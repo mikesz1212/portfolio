@@ -25,13 +25,67 @@
     `;
   }
 
+  /** Same scattered layout on every reload (fixed seed, not a single row). */
+  function computeScatteredPositions(projects) {
+    let seed = 20260521;
+    const rng = () => {
+      seed = (seed * 16807) % 2147483647;
+      return (seed - 1) / 2147483646;
+    };
+
+    const sorted = [...projects].sort((a, b) => a.id.localeCompare(b.id));
+    const placed = [];
+    const minDistance = 12;
+    const map = {};
+
+    function inContactZone(left, top) {
+      return left > 60 && top > 50;
+    }
+
+    for (const project of sorted) {
+      let positioned = false;
+      for (let attempt = 0; attempt < 120; attempt++) {
+        const top = 12 + rng() * 58;
+        const left = 6 + rng() * 76;
+        if (inContactZone(left, top)) continue;
+
+        const crowded = placed.some(
+          (p) => Math.hypot(left - p.left, top - p.top) < minDistance
+        );
+        if (!crowded) {
+          placed.push({ left, top });
+          map[project.id] = {
+            top: `${top.toFixed(1)}%`,
+            left: `${left.toFixed(1)}%`,
+          };
+          positioned = true;
+          break;
+        }
+      }
+
+      if (!positioned) {
+        const i = placed.length;
+        map[project.id] = {
+          top: `${(15 + i * 11).toFixed(1)}%`,
+          left: `${(8 + i * 13).toFixed(1)}%`,
+        };
+        placed.push({ left: 8 + i * 13, top: 15 + i * 11 });
+      }
+    }
+
+    return map;
+  }
+
+  const iconPositions = computeScatteredPositions(PROJECTS);
+
   function createDesktopIcon(project) {
+    const pos = iconPositions[project.id];
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "desktop-icon";
     btn.setAttribute("aria-label", `Open ${project.label}`);
-    btn.style.top = project.position.top;
-    btn.style.left = project.position.left;
+    btn.style.top = pos.top;
+    btn.style.left = pos.left;
 
     btn.innerHTML = `
       ${createIconGraphic(project)}
