@@ -11,4 +11,19 @@ const PROJECT_TEXT = {
     "For this series of events, we were responsible for the full production and creative direction. The goal was to build an immersive brand experience that connected Lipton with the Snowfest audience.",
     "From research and ideation through to execution on site, we delivered visual identity, spatial design, and content that carried the campaign across every touchpoint.",
   ],
+  "tenders": [
+    "A significant and central part of my role was preparing comprehensive tender and pitch submissions: brand strategy, creative platforms, brand advocacy programs, and cross-funnel touchpoints.",
+    "Notable wins include full-service stewardship for Lipton and L'Oréal's largest division, CPD, secured in multitrack competitive pitches.",
+  ],
+  "kizo": [
+    "Worked as Production Manager across multiple projects for Kizo: commercial spots for the KIZZERS product line — end-to-end production management including scheduling, budgeting, crew and vendor coordination, permits, logistics, onset operations, and delivery of channel-ready masters.",
+    "\"Moda i Sukces\" series — full production oversight from planning and call sheets through shoot management and postproduction workflows, ensuring continuity, quality control, and timely releases.",
+  ],
+  "hbo-alice": [
+    "Bring Back Alice is a Polish HBO Max original series — a dark mystery/thriller set in the Tri-City. The campaign required high-impact audiovisual and key art promo materials tailored for streaming, broadcast, and social platforms.",
+    "I worked as Production Manager for the promotional assets, overseeing end-to-end execution: schedules and budgets, crew and vendor coordination, locations and permits, on-set operations, and postproduction workflows through final delivery (trailer, key visuals, social cutdowns).",
+  ],
+  "campari": [
+    "Campari campaign creative and production. Add project description in assets/projects/campari/campari.docx when ready.",
+  ],
 };

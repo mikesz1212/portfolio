@@ -1,7 +1,7 @@
 .DS_Store
 **/.DS_Store
+~$*
 
-# GitHub rejects files over 100 MB — keep videos locally, host elsewhere for the live site
-*.mp4
-*.mov
-*.webm
+# Only videos over GitHub's 100 MB limit
+assets/projects/iga-lancome/*.mp4
+assets/projects/lavazza-wosp/*.mp4
