@@ -171,9 +171,18 @@ portfolio/
     projects/
 ```
 
-## Deploy later
+## GitHub Pages
 
-Upload the entire `portfolio` folder to Netlify, GitHub Pages, or any static host. All paths are relative.
+Live site: **https://mikesz1212.github.io/portfolio/**
+
+1. Repo: `github.com/mikesz1212/portfolio`
+2. **Settings → Pages →** branch `main`, folder `/ (root)`
+
+**Videos:** `.mp4` files are not in the repo (GitHub’s 100 MB file limit). They still work when you open `index.html` locally. For the live site, upload videos to Vimeo/YouTube/Google Drive and paste the links in `js/projects.js`, or use [Git LFS](https://git-lfs.github.com).
+
+## Deploy elsewhere
+
+Upload the entire `portfolio` folder to Netlify or any static host. All paths are relative.
 
 ## Notes
 
