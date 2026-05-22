@@ -262,9 +262,9 @@ a.contact-card__value:hover {
 
 @media (max-width: 767px) {
   .contact-card {
-    right: 12px;
+    left: 12px;
+    right: auto;
     bottom: 12px;
-    left: auto;
     width: min(300px, calc(72vw - 12px));
     max-width: none;
     padding: 14px 16px;
