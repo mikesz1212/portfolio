@@ -260,21 +260,12 @@ a.contact-card__value:hover {
   color: var(--mac-accent);
 }
 
-.contact-card__note {
-  margin-top: 12px;
-  padding-top: 12px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  font-size: 11px;
-  line-height: 1.45;
-  color: var(--mac-text-muted);
-}
-
 @media (max-width: 767px) {
   .contact-card {
     right: 12px;
     bottom: 12px;
-    left: 12px;
-    width: auto;
+    left: auto;
+    width: min(300px, calc(72vw - 12px));
     max-width: none;
     padding: 14px 16px;
     z-index: 5;

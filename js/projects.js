@@ -146,8 +146,7 @@ const PROJECTS = [
     images: [
       "assets/projects/pezet/Zrzut ekranu 2026-05-21 o 23.19.32.png",
     ],
-    videoDrive:
-      "https://drive.google.com/file/d/1ZVXS6dwJKFUclcA9jGWw5cHokj_uhIJ2/view?usp=sharing",
+    videos: ["assets/projects/pezet/Pezet Ukryty w Mieście Krzyk.mp4"],
     thumbnail: "assets/projects/pezet/Zrzut ekranu 2026-05-21 o 23.19.32.png",
     iconType: "image",
     thumbnailTall: true,

@@ -185,14 +185,9 @@
       })
       .join("");
 
-    const note = CONTACT.note
-      ? `<p class="contact-card__note">${CONTACT.note}</p>`
-      : "";
-
     el.innerHTML = `
       <h2 class="contact-card__title">${CONTACT.title}</h2>
       <ul class="contact-card__list">${items}</ul>
-      ${note}
     `;
   }
 
