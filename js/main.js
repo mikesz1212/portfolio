@@ -14,6 +14,9 @@
     ...(typeof DESKTOP_EXTRAS !== "undefined" ? DESKTOP_EXTRAS : []),
   ];
 
+  /** Extra top offset in px (desktop + mobile) */
+  const ICON_TOP_OFFSET_PX = { cv: 30 };
+
   /**
    * Fixed irregular slots — pre-checked to avoid portfolio text + contact card.
    * One slot per icon; order filled alphabetically (anchors first).
@@ -116,7 +119,13 @@
       const idx = cfg.slotById[item.id];
       if (idx == null || !slots[idx]) return;
       const s = slots[idx];
-      map[item.id] = formatPos(s.left, s.top);
+      const extraTop = ICON_TOP_OFFSET_PX[item.id] || 0;
+      map[item.id] = extraTop
+        ? {
+            left: `${s.left.toFixed(1)}%`,
+            top: `calc(${s.top}% + ${extraTop}px)`,
+          }
+        : formatPos(s.left, s.top);
     });
 
     return map;
