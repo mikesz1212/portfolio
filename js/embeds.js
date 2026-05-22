@@ -15,10 +15,89 @@ const MediaEmbed = (() => {
     return "https://mikesz1212.github.io";
   }
 
+  function googleDriveFileId(url) {
+    const m = String(url || "").match(/\/file\/d\/([^/]+)/);
+    return m ? m[1] : "";
+  }
+
   function googleDrivePreview(url) {
-    const m = url.match(/\/file\/d\/([^/]+)/);
-    if (!m) return "";
-    return `https://drive.google.com/file/d/${m[1]}/preview`;
+    const id = googleDriveFileId(url);
+    if (!id) return "";
+    return `https://drive.google.com/file/d/${id}/preview`;
+  }
+
+  function googleDriveStreamUrl(id) {
+    if (!id) return "";
+    return `https://drive.google.com/uc?export=download&id=${encodeURIComponent(id)}`;
+  }
+
+  function googleDriveThumbnailUrl(id) {
+    if (!id) return "";
+    return `https://drive.google.com/thumbnail?id=${encodeURIComponent(id)}&sz=w1280`;
+  }
+
+  function googleDriveViewUrl(url) {
+    const id = googleDriveFileId(url);
+    if (!id) return url || "";
+    return `https://drive.google.com/file/d/${id}/view`;
+  }
+
+  function renderDriveIframe(url, label, vertical, scaled) {
+    const src = googleDrivePreview(url);
+    if (!src) return "";
+    const safeLabel = escapeHtml(label || "Video");
+    const verticalClass = vertical ? " case-study__video-embed--vertical" : "";
+    const scaledClass = scaled ? " case-study__drive-iframe-wrap--scaled" : "";
+    return `<div class="case-study__drive-iframe-wrap${scaledClass}">
+      <iframe ${iframeAttrs(safeLabel, `case-study__video-embed--drive${verticalClass}`)} src="${escapeHtml(src)}"></iframe>
+    </div>`;
+  }
+
+  function renderDriveOpenLink(url) {
+    const viewUrl = escapeHtml(googleDriveViewUrl(url));
+    return `<a class="case-study__drive-open" href="${viewUrl}" target="_blank" rel="noopener noreferrer">Open in Google Drive</a>`;
+  }
+
+  function renderDriveVideo(url, label, vertical) {
+    const id = googleDriveFileId(url);
+    const stream = googleDriveStreamUrl(id);
+    if (!stream) return renderDriveIframe(url, label, vertical, false);
+    const safeLabel = escapeHtml(label || "Video");
+    const viewUrl = escapeHtml(googleDriveViewUrl(url));
+    const poster = googleDriveThumbnailUrl(id);
+    const posterAttr = poster ? ` poster="${escapeHtml(poster)}"` : "";
+    const verticalClass = vertical ? " case-study__video--vertical" : "";
+    const driveUrl = escapeHtml(String(url || ""));
+    return `<div class="case-study__drive-player" data-drive-url="${driveUrl}" data-drive-label="${safeLabel}" data-drive-vertical="${vertical ? "1" : "0"}">
+      <video class="case-study__video case-study__video--drive${verticalClass}" controls playsinline preload="metadata"${posterAttr} title="${safeLabel}">
+        <source src="${escapeHtml(stream)}" type="video/mp4">
+      </video>
+      ${renderDriveOpenLink(url)}
+    </div>`;
+  }
+
+  function useScaledDriveIframe() {
+    return window.matchMedia("(max-width: 767px)").matches;
+  }
+
+  function fallbackDrivePlayer(wrap) {
+    const url = wrap.dataset.driveUrl;
+    if (!url || wrap.dataset.driveFallback === "1") return;
+    wrap.dataset.driveFallback = "1";
+    const label = wrap.dataset.driveLabel || "Video";
+    const vertical = wrap.dataset.driveVertical === "1";
+    const scaled = useScaledDriveIframe();
+    wrap.classList.add("case-study__drive-player--fallback");
+    wrap.innerHTML = `${renderDriveIframe(url, label, vertical, scaled)}${renderDriveOpenLink(url)}`;
+  }
+
+  function wireDriveVideos(root) {
+    if (!root) return;
+    root.querySelectorAll(".case-study__drive-player video").forEach((video) => {
+      if (video.dataset.driveWired === "1") return;
+      video.dataset.driveWired = "1";
+      video.addEventListener("error", () => fallbackDrivePlayer(video.closest(".case-study__drive-player")));
+    });
   }
 
   function youtubeEmbed(url) {
@@ -52,9 +131,25 @@ const MediaEmbed = (() => {
     return "";
   }
 
+  function assetUrl(path) {
+    if (typeof ContentLoader !== "undefined" && ContentLoader.assetUrl) {
+      return ContentLoader.assetUrl(path);
+    }
+    return path
+      .split("/")
+      .map((part, i) => (i === 0 || !part ? part : encodeURIComponent(part)))
+      .join("/");
+  }
+
+  function isLocalVideoPath(url) {
+    const u = String(url || "").trim();
+    return /\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(u) && !/^https?:\/\//i.test(u);
+  }
+
   function detect(url) {
     if (!url) return null;
     const u = url.trim();
+    if (isLocalVideoPath(u)) return "file";
     if (u.includes("drive.google.com")) return "drive";
     if (u.includes("youtube.com") || u.includes("youtu.be")) return "youtube";
     if (u.includes("tiktok.com")) return "tiktok";
@@ -72,9 +167,12 @@ const MediaEmbed = (() => {
     const vertical = options.vertical ? " case-study__video-embed--vertical" : "";
 
     if (type === "drive") {
-      const src = googleDrivePreview(url);
-      if (!src) return "";
-      return `<iframe ${iframeAttrs(safeLabel, `case-study__video-embed--drive${vertical}`)} src="${src}"></iframe>`;
+      return renderDriveVideo(url, label, options.vertical);
+    }
+
+    if (type === "file") {
+      const src = assetUrl(url.trim());
+      return `<video class="case-study__video" controls playsinline preload="metadata" title="${safeLabel}" src="${escapeHtml(src)}"></video>`;
     }
 
     if (type === "youtube") {
@@ -111,5 +209,14 @@ const MediaEmbed = (() => {
     return `<section class="${rowClass}">${inner}</section>`;
   }
 
-  return { detect, render, renderBlock, youtubeEmbed, googleDrivePreview };
+  return {
+    detect,
+    render,
+    renderBlock,
+    wireDriveVideos,
+    youtubeEmbed,
+    googleDrivePreview,
+    googleDriveFileId,
+    googleDriveStreamUrl,
+  };
 })();

@@ -191,6 +191,7 @@ const WindowManager = (() => {
       CaseStudyLayout.renderAsync(project).then((html) => {
         if (openWindows.has(project.id) && bodyEl) {
           bodyEl.innerHTML = html;
+          MediaEmbed.wireDriveVideos(bodyEl);
         }
       });
     }

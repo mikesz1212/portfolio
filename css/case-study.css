@@ -262,9 +262,77 @@
   justify-items: center;
 }
 
-.case-study__video-embed--drive {
+.case-study__video--drive {
   aspect-ratio: 16 / 9;
-  min-height: 280px;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.case-study__video--drive.case-study__video--vertical {
+  aspect-ratio: 9 / 16;
+  max-width: 280px;
+  margin: 0 auto;
+}
+
+.case-study__drive-player {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.case-study__drive-open {
+  align-self: flex-end;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  font-size: 0.8rem;
+  color: #98989d;
+  text-decoration: none;
+}
+
+.case-study__drive-open:hover {
+  color: #f5f5f7;
+  text-decoration: underline;
+}
+
+.case-study__drive-iframe-wrap {
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #000;
+}
+
+.case-study__drive-iframe-wrap .case-study__video-embed--drive {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  min-height: 0;
+  border-radius: 10px;
+}
+
+@media (max-width: 767px) {
+  .case-study__drive-iframe-wrap--scaled {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+  }
+
+  .case-study__drive-iframe-wrap--scaled .case-study__video-embed--drive {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 320%;
+    height: 320%;
+    max-width: none;
+    transform: scale(0.3125);
+    transform-origin: 0 0;
+  }
+
+  .case-study__drive-iframe-wrap--scaled .case-study__video-embed--vertical {
+    width: 280%;
+    height: 280%;
+    transform: scale(0.3571428571);
+  }
 }
 
 .case-study__cell--logo {

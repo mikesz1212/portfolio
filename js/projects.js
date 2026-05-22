@@ -81,9 +81,9 @@ const PROJECTS = [
     ],
     imageEmbeds: {
       "assets/projects/kizo/kizo-2-1000x600.jpg":
-        "https://drive.google.com/file/d/1N-tMjvaAVCg3tT2yrgLL9-Xl0QDMKfmP/view?usp=sharing",
+        "assets/projects/kizo/Moda i Sukces Zwiastun.mp4",
       "assets/projects/kizo/kizo-3.jpg":
-        "https://drive.google.com/file/d/1QBaRi6mQGrirfkbOnN3XrmjTdS_AHyi0/view?usp=sharing",
+        "assets/projects/kizo/Tajniki-podrywu-Kizzers-odc-5.mp4",
     },
     thumbnail: "assets/projects/kizo/kizo-2-1000x600.jpg",
   },
