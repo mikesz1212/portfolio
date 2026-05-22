@@ -3,8 +3,82 @@
 
   const ICON_PATHS = {
     folder: "assets/icons/folder.svg",
-    pdf: "assets/icons/pdf.svg",
+    pdf: "assets/icons/pdf.png",
     audio: "assets/icons/audio.svg",
+    notes: "assets/icons/notes.png",
+    trash: "assets/icons/trash.png",
+  };
+
+  const ALL_DESKTOP_ITEMS = [
+    ...PROJECTS,
+    ...(typeof DESKTOP_EXTRAS !== "undefined" ? DESKTOP_EXTRAS : []),
+  ];
+
+  /**
+   * Fixed irregular slots — pre-checked to avoid portfolio text + contact card.
+   * One slot per icon; order filled alphabetically (anchors first).
+   */
+  const LAYOUT = {
+    desktop: {
+      portfolio: { leftMin: 30, leftMax: 70, topMin: 17, topMax: 53 },
+      contact: { leftMin: 52, topMin: 38 },
+      slots: [
+        { left: 11, top: 10 },
+        { left: 11, top: 28 },
+        { left: 11, top: 46 },
+        { left: 11, top: 64 },
+        { left: 24, top: 14 },
+        { left: 24, top: 66 },
+        { left: 77, top: 10 },
+        { left: 77, top: 28 },
+        { left: 77, top: 46 },
+        { left: 77, top: 64 },
+        { left: 11, top: 78 },
+      ],
+      slotById: {
+        "iga-lancome": 0,
+        "hbo-alice": 1,
+        "kizo": 2,
+        "lavazza-wosp": 6,
+        "lipton-snowfest": 7,
+        "mcdonalds": 8,
+        "notes": 4,
+        pezet: 5,
+        tenders: 3,
+        trash: 9,
+        cv: 10,
+      },
+    },
+    mobile: {
+      portfolio: { leftMin: 24, leftMax: 76, topMin: 15, topMax: 44 },
+      /* ~19% vertical step within each column */
+      slots: [
+        { left: 14, top: 5 },
+        { left: 14, top: 24 },
+        { left: 14, top: 43 },
+        { left: 14, top: 62 },
+        { left: 14, top: 78 },
+        { left: 82, top: 5 },
+        { left: 82, top: 24 },
+        { left: 82, top: 43 },
+        { left: 82, top: 62 },
+        { left: 82, top: 76 },
+        { left: 48, top: 5 },
+      ],
+      slotById: {
+        "iga-lancome": 0,
+        "hbo-alice": 1,
+        "kizo": 2,
+        tenders: 3,
+        trash: 4,
+        pezet: 5,
+        "lipton-snowfest": 6,
+        "mcdonalds": 7,
+        "lavazza-wosp": 8,
+        cv: 9,
+        notes: 10,
+      },
+    },
   };
 
   function createIconGraphic(project) {
@@ -25,74 +99,71 @@
     `;
   }
 
-  /** Same scattered layout on every reload (fixed seed, not a single row). */
-  function computeScatteredPositions(projects) {
-    let seed = 20260521;
-    const rng = () => {
-      seed = (seed * 16807) % 2147483647;
-      return (seed - 1) / 2147483646;
-    };
+  function getConfig() {
+    return window.innerWidth < 768 ? LAYOUT.mobile : LAYOUT.desktop;
+  }
 
-    const sorted = [...projects].sort((a, b) => a.id.localeCompare(b.id));
-    const placed = [];
-    const minDistance = 12;
+  function formatPos(left, top) {
+    return { top: `${top.toFixed(1)}%`, left: `${left.toFixed(1)}%` };
+  }
+
+  function computeIconPositions() {
+    const cfg = getConfig();
+    const slots = cfg.slots;
     const map = {};
 
-    function inContactZone(left, top) {
-      return left > 60 && top > 50;
-    }
-
-    for (const project of sorted) {
-      let positioned = false;
-      for (let attempt = 0; attempt < 120; attempt++) {
-        const top = 12 + rng() * 58;
-        const left = 6 + rng() * 76;
-        if (inContactZone(left, top)) continue;
-
-        const crowded = placed.some(
-          (p) => Math.hypot(left - p.left, top - p.top) < minDistance
-        );
-        if (!crowded) {
-          placed.push({ left, top });
-          map[project.id] = {
-            top: `${top.toFixed(1)}%`,
-            left: `${left.toFixed(1)}%`,
-          };
-          positioned = true;
-          break;
-        }
-      }
-
-      if (!positioned) {
-        const i = placed.length;
-        map[project.id] = {
-          top: `${(15 + i * 11).toFixed(1)}%`,
-          left: `${(8 + i * 13).toFixed(1)}%`,
-        };
-        placed.push({ left: 8 + i * 13, top: 15 + i * 11 });
-      }
-    }
+    ALL_DESKTOP_ITEMS.forEach((item) => {
+      const idx = cfg.slotById[item.id];
+      if (idx == null || !slots[idx]) return;
+      const s = slots[idx];
+      map[item.id] = formatPos(s.left, s.top);
+    });
 
     return map;
   }
 
-  const iconPositions = computeScatteredPositions(PROJECTS);
+  let iconPositions = computeIconPositions();
 
-  function createDesktopIcon(project) {
-    const pos = iconPositions[project.id];
+  function applyIconPositions() {
+    ALL_DESKTOP_ITEMS.forEach((item) => {
+      const btn = iconsContainer.querySelector(`[data-icon-id="${item.id}"]`);
+      if (!btn) return;
+      const pos = iconPositions[item.id];
+      if (!pos) return;
+      btn.style.top = pos.top;
+      btn.style.left = pos.left;
+    });
+  }
+
+  function relayoutDesktopIcons() {
+    iconPositions = computeIconPositions();
+    applyIconPositions();
+  }
+
+  let resizeTimer;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(relayoutDesktopIcons, 250);
+  });
+
+  function createDesktopIcon(item) {
+    const pos = iconPositions[item.id];
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "desktop-icon";
-    btn.setAttribute("aria-label", `Open ${project.label}`);
-    btn.style.top = pos.top;
-    btn.style.left = pos.left;
+    btn.dataset.iconId = item.id;
+    btn.setAttribute("aria-label", `Open ${item.label}`);
+    if (pos) {
+      btn.style.top = pos.top;
+      btn.style.left = pos.left;
+    }
 
     btn.innerHTML = `
-      ${createIconGraphic(project)}
-      <span class="desktop-icon__label">${project.label}</span>
+      ${createIconGraphic(item)}
+      <span class="desktop-icon__label">${item.label}</span>
     `;
 
-    btn.addEventListener("click", () => WindowManager.open(project));
+    btn.addEventListener("click", () => WindowManager.open(item));
     return btn;
   }
 
@@ -126,8 +197,8 @@
   }
 
   function initDesktop() {
-    PROJECTS.forEach((project) => {
-      iconsContainer.appendChild(createDesktopIcon(project));
+    ALL_DESKTOP_ITEMS.forEach((item) => {
+      iconsContainer.appendChild(createDesktopIcon(item));
     });
   }
 

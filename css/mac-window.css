@@ -166,23 +166,28 @@
   background: #2c2c2e;
 }
 
-.mac-window__pdf {
+.mac-window__body--pdf {
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.mac-window__pdf-viewer {
+  flex: 1;
   width: 100%;
-  height: 360px;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: #2c2c2e;
+  min-height: 0;
+  background: #1a1a1c;
 }
 
-.mac-window__pdf-link {
-  display: inline-block;
-  margin-top: 8px;
-  color: #0a84ff;
-  text-decoration: none;
-}
-
-.mac-window__pdf-link:hover {
-  text-decoration: underline;
+.mac-window__pdf-embed {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: calc(100dvh - 88px);
+  border: none;
+  background: #1a1a1c;
 }
 
 .mac-window__audio {
@@ -209,6 +214,37 @@
   color: #98989d;
   font-style: italic;
   padding: 24px;
+}
+
+.mac-window__body--simple {
+  padding: 24px;
+}
+
+.simple-window {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: #c7c7cc;
+}
+
+.simple-window a {
+  color: #0a84ff;
+  word-break: break-all;
+}
+
+.simple-window__quote {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #e8e8ed;
+}
+
+.simple-window--embed .case-study__video-embed {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  min-height: 240px;
+  border: none;
+  border-radius: 8px;
+  background: #000;
 }
 
 @media (max-width: 767px) {

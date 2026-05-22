@@ -11,82 +11,82 @@ const WindowManager = (() => {
     return `<div class="mac-window__placeholder">${text}</div>`;
   }
 
+  function renderNotesBody() {
+    const link =
+      "https://www.youtube.com/watch?v=ZJL4UGSbeFg&list=RDZJL4UGSbeFg&start_radio=1";
+    return `
+      <div class="simple-window">
+        <p><a href="${link}" target="_blank" rel="noopener">${link}</a></p>
+      </div>
+    `;
+  }
+
+  function renderTrashBody() {
+    return `
+      <div class="simple-window">
+        <p class="simple-window__quote">Who knows how many „bold” and „out of the box” ideas :((((</p>
+      </div>
+    `;
+  }
+
   function renderFolderBody(project) {
     return `<p class="case-study__loading">Loading project…</p>`;
   }
 
   function renderPdfBody(project) {
     const pdfPath = project.pdf;
-    let viewer = renderPlaceholder("PDF coming soon — add deck.pdf to assets/projects/loreal/");
+    let viewer = renderPlaceholder(
+      "Dodaj plik PDF do assets/cv.pdf (lub zmień ścieżkę w desktop-extras.js)."
+    );
 
-    if (project.contentStatus === "ready" && assetExists(pdfPath)) {
+    if (assetExists(pdfPath)) {
+      const src = `${ContentLoader.assetUrl(pdfPath)}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`;
       viewer = `
-        <iframe class="mac-window__pdf" src="${pdfPath}" title="${project.label}"></iframe>
-        <a class="mac-window__pdf-link" href="${pdfPath}" target="_blank" rel="noopener">Open PDF in new tab</a>
+        <div class="mac-window__pdf-viewer">
+          <embed
+            class="mac-window__pdf-embed"
+            src="${src}"
+            type="application/pdf"
+            title="${project.label}"
+          />
+        </div>
       `;
     }
 
-    return `
-      <h3>${project.label}</h3>
-      <p>${project.description || ""}</p>
-      ${viewer}
-    `;
-  }
-
-  function renderAudioBody(project) {
-    let player = renderPlaceholder("Audio coming soon — add track.mp3 to assets/projects/pezet/");
-
-    if (project.contentStatus === "ready" && assetExists(project.audio)) {
-      player = `<audio class="mac-window__audio" controls src="${project.audio}">Your browser does not support audio.</audio>`;
+    if (pdfPath && assetExists(pdfPath)) {
+      return viewer;
     }
-
-    return `
-      <h3>${project.label}</h3>
-      <p>${project.description || ""}</p>
-      ${player}
-    `;
-  }
-
-  function renderImageBody(project) {
-    if (CaseStudyLayout.usesCaseStudy(project)) {
-      return `<p class="case-study__loading">Loading project…</p>`;
-    }
-
-    let img = renderPlaceholder("Image coming soon");
-
-    if (project.contentStatus === "ready" && assetExists(project.hero)) {
-      img = `<img class="mac-window__hero" src="${project.hero}" alt="${project.label}" loading="lazy">`;
-    } else if (assetExists(project.hero)) {
-      img = `<img class="mac-window__hero" src="${project.hero}" alt="${project.label}" loading="lazy" onerror="this.outerHTML='<div class=\\'mac-window__placeholder\\'>Image coming soon</div>'">`;
-    }
-
-    return `
-      <h3>${project.label}</h3>
-      <p>${project.description || ""}</p>
-      ${img}
-    `;
+    return `<div class="simple-window">${viewer}</div>`;
   }
 
   function renderBody(project) {
     switch (project.type) {
+      case "notes":
+        return renderNotesBody();
+      case "trash":
+        return renderTrashBody();
       case "folder":
         return renderFolderBody(project);
       case "pdf":
         return renderPdfBody(project);
-      case "audio":
-        return renderAudioBody(project);
-      case "image":
-        return renderImageBody(project);
       default:
         return `<p>${project.description || "No content yet."}</p>`;
     }
   }
 
   function isCaseStudyBody(project) {
-    return (
-      project.type === "folder" ||
-      (project.type === "image" && CaseStudyLayout.usesCaseStudy(project))
-    );
+    return project.type === "folder";
+  }
+
+  function needsSimpleBody(project) {
+    return project.type === "notes" || project.type === "trash" || project.type === "pdf";
+  }
+
+  function getBodyClass(project) {
+    if (isCaseStudyBody(project)) return "mac-window__body mac-window__body--case-study";
+    if (project.type === "pdf") return "mac-window__body mac-window__body--simple mac-window__body--pdf";
+    if (needsSimpleBody(project)) return "mac-window__body mac-window__body--simple";
+    return "mac-window__body";
   }
 
   function focusWindow(el) {
@@ -148,8 +148,7 @@ const WindowManager = (() => {
 
   function open(project) {
     if (openWindows.has(project.id)) {
-      const existing = openWindows.get(project.id);
-      focusWindow(existing);
+      focusWindow(openWindows.get(project.id));
       return;
     }
 
@@ -159,9 +158,7 @@ const WindowManager = (() => {
     win.setAttribute("role", "dialog");
     win.setAttribute("aria-label", project.label);
 
-    const bodyClass = isCaseStudyBody(project)
-      ? "mac-window__body mac-window__body--case-study"
-      : "mac-window__body";
+    const bodyClass = getBodyClass(project);
 
     win.innerHTML = `
       <div class="mac-window__chrome">

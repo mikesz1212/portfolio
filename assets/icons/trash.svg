@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="binLid" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#b8b8bd"/>
+      <stop offset="100%" stop-color="#8e8e93"/>
+    </linearGradient>
+    <linearGradient id="binCan" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#d1d1d6"/>
+      <stop offset="50%" stop-color="#aeaeb2"/>
+      <stop offset="100%" stop-color="#8e8e93"/>
+    </linearGradient>
+    <filter id="binShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  <g filter="url(#binShadow)">
+    <rect x="18" y="11" width="28" height="5" rx="2.5" fill="url(#binLid)"/>
+    <rect x="22" y="8" width="20" height="4" rx="2" fill="#c7c7cc"/>
+    <path fill="url(#binCan)" d="M14 18h36l-3.5 36c-.2 2.4-2.2 4.2-4.6 4.2H21.6c-2.4 0-4.4-1.8-4.6-4.2L14 18z"/>
+    <rect x="24" y="24" width="3" height="24" rx="1.2" fill="#636366" opacity="0.45"/>
+    <rect x="30.5" y="24" width="3" height="24" rx="1.2" fill="#636366" opacity="0.45"/>
+    <rect x="37" y="24" width="3" height="24" rx="1.2" fill="#636366" opacity="0.45"/>
+  </g>
+</svg>

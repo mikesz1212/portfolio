@@ -115,25 +115,11 @@ body.macos-dark {
   overflow: hidden;
 }
 
-.desktop__title {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  font-size: clamp(2rem, 6vw, 4rem);
-  font-weight: 600;
-  letter-spacing: -0.03em;
-  color: rgba(255, 255, 255, 0.12);
-  text-transform: lowercase;
-  pointer-events: none;
-  z-index: 1;
-  white-space: nowrap;
-}
-
 .desktop__icons {
   position: absolute;
   inset: 0;
   z-index: 3;
+  overflow: visible;
 }
 
 .desktop-icon {
@@ -287,8 +273,15 @@ a.contact-card__value:hover {
   .contact-card {
     right: 12px;
     bottom: 12px;
-    width: min(260px, calc(100vw - 24px));
+    left: 12px;
+    width: auto;
+    max-width: none;
     padding: 14px 16px;
+    z-index: 5;
+  }
+
+  .desktop__icons {
+    bottom: 200px;
   }
 
   .menubar__menus {
@@ -297,10 +290,17 @@ a.contact-card__value:hover {
 
   .desktop-icon {
     width: 80px;
+    max-width: 88px;
   }
 
   .desktop-icon__graphic {
     width: 52px;
     height: 52px;
+  }
+
+  .desktop-icon__label {
+    font-size: 10px;
+    line-height: 1.25;
+    max-width: 84px;
   }
 }

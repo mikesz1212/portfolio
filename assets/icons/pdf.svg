@@ -1,14 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
   <defs>
-    <linearGradient id="docBg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#4a4a4e"/>
-      <stop offset="100%" stop-color="#2c2c2e"/>
+    <linearGradient id="docPaper" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#ebebf0"/>
     </linearGradient>
+    <filter id="docShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000" flood-opacity="0.28"/>
+    </filter>
   </defs>
-  <rect x="12" y="8" width="40" height="48" rx="6" fill="url(#docBg)" stroke="#5a5a5e" stroke-width="1"/>
-  <path fill="#ff6b6b" d="M12 14h40v8H12z"/>
-  <text x="32" y="20" text-anchor="middle" font-family="system-ui,sans-serif" font-size="6" font-weight="600" fill="#fff">PDF</text>
-  <rect x="18" y="28" width="28" height="3" rx="1.5" fill="#6e6e73" opacity="0.8"/>
-  <rect x="18" y="35" width="22" height="3" rx="1.5" fill="#6e6e73" opacity="0.5"/>
-  <rect x="18" y="42" width="26" height="3" rx="1.5" fill="#6e6e73" opacity="0.5"/>
+  <g filter="url(#docShadow)">
+    <path fill="url(#docPaper)" stroke="#c7c7cc" stroke-width="0.8" d="M13 7h29l11 11v35c0 1.7-1.3 3-3 3H16c-1.7 0-3-1.3-3-3V10c0-1.7 1.3-3 3-3z"/>
+    <path fill="#d1d1d6" d="M42 7v11h11L42 7z"/>
+    <rect x="18" y="22" width="22" height="2.5" rx="1" fill="#d1d1d6"/>
+    <rect x="18" y="28" width="26" height="2.5" rx="1" fill="#e5e5ea"/>
+    <rect x="18" y="34" width="20" height="2.5" rx="1" fill="#e5e5ea"/>
+    <circle cx="44" cy="44" r="11" fill="#ff3b30"/>
+    <text x="44" y="48" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="8" font-weight="700" fill="#fff">PDF</text>
+  </g>
 </svg>
