@@ -12,8 +12,7 @@ const WindowManager = (() => {
   }
 
   function renderNotesBody() {
-    const link =
-      "https://www.youtube.com/watch?v=ZJL4UGSbeFg&list=RDZJL4UGSbeFg&start_radio=1";
+    const link = "https://youtu.be/Ysf6pcyeBsY?is=AT8qxErTRmAAe0zR";
     return `
       <div class="simple-window">
         <p><a href="${link}" target="_blank" rel="noopener">${link}</a></p>
